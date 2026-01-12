@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Programs</h1>
+
+{% if programs %}
+    <ul>
+    {% for program in programs %}
+        <li>
+            <!-- Clickable link to the program's terms page -->
+            <a href="{% url 'programs:term_list' program.slug %}">{{ program.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No programs available.</p>
+{% endif %}
+{% endblock %}

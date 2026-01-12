@@ -1,0 +1,10 @@
+<h1>{{ lesson.slug }}</h1>
+
+<p>Status: {{ lesson.status }}</p>
+<p>Published at: {{ lesson.publish_at }}</p>
+
+<br>
+<a href="{% url 'programs:lesson_detail' term.program.slug term.slug lesson.slug %}">
+    {{ lesson.title }}
+</a> - Status: {{ lesson.status }}
+

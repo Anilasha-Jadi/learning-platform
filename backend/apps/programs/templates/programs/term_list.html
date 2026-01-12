@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terms in {{ program.title }}</title>
+</head>
+<body>
+    <h1>{{ program.title }} - Terms</h1>
+    <a href="{% url 'programs:program_list' %}">← Back to Programs</a>
+
+    {% if terms %}
+        <ul>
+            {% for term in terms %}
+                <li>
+                    <a href="{% url 'programs:lesson_list' program.slug term.slug %}">{{ term.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No terms available for this program.</p>
+    {% endif %}
+</body>
+</html>

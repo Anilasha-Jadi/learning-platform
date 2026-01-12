@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:15
+    container_name: learning_platform_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: learning_platform
+      POSTGRES_USER: learning_user
+      POSTGRES_PASSWORD: learning_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: learning_platform_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: lms
+      DB_USER: lmsuser
+      DB_PASSWORD: lmspass
+      DB_HOST: db
+      DB_PORT: 5432
+  worker:
+    build: ./backend
+    command: python workers/publish_worker.py
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - backend
+      - db
+
+
+volumes:
+  pgdata:

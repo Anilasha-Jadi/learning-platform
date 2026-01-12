@@ -1,0 +1,13 @@
+from django.contrib import admin
+from .models import User, Role
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("email", "full_name", "is_staff", "is_active")
+    search_fields = ("email", "full_name")
+    list_filter = ("is_staff", "is_active")
+    ordering = ("email",)
+
+@admin.register(Role)
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ("name",)
